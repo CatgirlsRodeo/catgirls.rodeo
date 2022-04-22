@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    Justicar (0.1.0)
+    Justicar (1.0.0)
       opal (~> 1.5)
       opal-browser (~> 0.3.3)
       paggio (~> 0.3.0)
@@ -15,14 +15,16 @@ GEM
     paggio (0.3.0)
     parser (3.1.2.0)
       ast (~> 2.4.1)
+    rake (13.0.6)
     webrick (1.7.0)
 
 PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  Justicar (~> 0.1.0)
+  Justicar (~> 1.0.0)
   opal-browser (~> 0.3.3)
+  rake (~> 13.0)
   webrick (~> 1.7)
 
 BUNDLED WITH
