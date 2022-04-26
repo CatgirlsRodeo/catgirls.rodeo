@@ -3,7 +3,110 @@ require 'native'
 require 'promise'
 require 'browser/setup/full'
 
+Position = Struct.new(:x, :y)
+mouse = Struct.new(:x, :y, :drag).new(0, 0, false)
+
 $document.ready do
+  title = $document.at_css('.draggable')
+
+  draggable = $document.css('.draggable')
+  $draggable = draggable
+  windows = $document.css('.window')
+
+  puts draggable.to_ary
+
+  draggable_cached_position = []
+  draggable.each do |element|
+    draggable_cached_position.push Position.new(
+      element.parent.position.x,
+      element.parent.position.y,
+    )
+  end
+  draggable.each_with_index do |element, index|
+    element.parent.style.apply {
+      top draggable_cached_position[index].y.px
+      left draggable_cached_position[index].x.px
+      position 'absolute'
+      z index: draggable.length - index
+    }
+  end
+=begin
+  windows.each do |element|
+    element.on :mousedown do |e|
+      puts draggable.to_ary
+      draggable.unshift draggable.delete(e.target.child)
+
+      $draggable.each_with_index do |elem, index|
+        elem.parent.style.apply {
+          z index: $draggable.length - index
+        }
+      end
+    end
+  end
+=end
+
+
+  draggable.each do |element|
+    element.on :mousedown do |e|
+      #puts (e.page.y.px - mouse.y)
+      draggable.unshift draggable.delete(element)
+
+      draggable.each_with_index do |element, index|
+        element.parent.style.apply {
+          z index: draggable.length - index
+        }
+      end
+
+      mouse.drag = element
+      mouse.x = e.page.x - element.parent.position.x
+      mouse.y = e.page.y - element.parent.position.y
+      element.parent.style.apply {
+        #top e.page.y.px
+        #left e.page.x.px
+        top (e.page.y.px - mouse.y).px
+        left (e.page.x.px - mouse.x).px
+        position 'absolute'
+      }
+      $document.one :mouseup do |e|
+        mouse.drag = false
+        #element.parent.style.apply {
+          #top e.page.y.px
+          #left e.page.x.px
+          #top element.position.y.px
+          #left element.position.x.px
+          #position 'absolute'
+        #}
+      end
+    end
+  end
+=begin
+  $document.css('.window').each do |element|
+    element.on :mousedown do |e|
+      puts 'mouse downed'
+      puts e.target.child
+      puts 'array:'
+      puts draggable
+      draggable.unshift draggable.delete(e.target.child)
+      draggable.to_ary.each_with_index do |drg_element, index|
+        puts "doesnt have style? #{drg_element}"
+        drg_element.style.apply {
+          z index: draggable.length - index
+        }
+      end
+    end
+  end
+=end
+  $document.on :mousemove do |e|
+    if mouse.drag
+      mouse.drag.parent.style.apply {
+        #top e.page.y.px
+        #left e.page.x.px
+        top (e.page.y.px - mouse.y).px
+        left (e.page.x.px - mouse.x).px
+      }
+    end
+  end
+=begin
   DOM do
     h2.opal do
       "Hello World from Opal!"
@@ -16,4 +119,5 @@ $document.ready do
       a(href: '/articles').articles { "Articles" }
     end
   end.append_to($document.body)
+=end
 end
