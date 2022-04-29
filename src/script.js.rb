@@ -19,6 +19,7 @@ def maximize_window(element)
     element.at_css('.window-body').style.apply {
       width $maximized.width.px
       height $maximized.height.px
+      resize 'both'
     }
   else
     $maximized.element = element
@@ -32,8 +33,9 @@ def maximize_window(element)
       left 0.px
     }
     element.at_css('.window-body').style.apply {
-      width ($document.window.size.inner_width - 16).px
+      width ($document.window.size.inner_width - 16 - 18).px
       height ($document.window.size.inner_height - 44).px
+      resize 'none'
     }
   end
 end
@@ -43,33 +45,11 @@ $document.ready do
   draggable = $document.css('.draggable')
   windows = $document.css('.window')
 
-  puts draggable.to_ary
 
   draggable_cached_position = []
-  guide.each do |element|
-    draggable_cached_position.push Rectangle.new(
-      element.position.x + element.parent.position.x,
-      element.position.y + element.parent.position.y,
-      element.width - 15,
-      element.height,
-    )
-  end
-  draggable.each_with_index do |element, index|
-    element.parent.style.apply {
-      top draggable_cached_position[index].y.px
-      left draggable_cached_position[index].x.px
-      position 'absolute'
-      z index: draggable.length - index
-    }
-    element.parent.at_css('.window-body').style.apply {
-      width draggable_cached_position[index].width.px
-      height draggable_cached_position[index].height.px
-    }
-  end
 
-  $document.at_css('.window_handler').remove
+  #$document.at_css('.window_handler').remove
 
-  puts $document.scroll.height
   $document.body.style.apply {
     height ($document.scroll.height + 50).px
   }
@@ -129,6 +109,27 @@ $document.ready do
         left (e.page.x.px - mouse.x).px
       }
     end
+  end
+
+  draggable.each do |element|
+    draggable_cached_position.push Rectangle.new(
+      element.position.x + (-20..20).to_a.sample, #+ element.parent.position.x,
+      element.position.y + 25 + (-20..20).to_a.sample, #+ element.parent.position.y,
+      element.width - 15,
+      element.height,
+    )
+  end
+  draggable.each_with_index do |element, index|
+    element.parent.style.apply {
+      top draggable_cached_position[index].y.px
+      left draggable_cached_position[index].x.px
+      position 'absolute'
+      z index: draggable.length - index
+    }
+    element.parent.at_css('.window-body').style.apply {
+      width draggable_cached_position[index].width.px
+      height draggable_cached_position[index].height.px
+    }
   end
 =begin
   DOM do

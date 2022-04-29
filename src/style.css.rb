@@ -5,11 +5,21 @@ Paggio.css do
   end
   rule 'body' do
     margin 0
+    background image: 'url("90s_arcade.png")'
+    background repeat: 'repeat'
     height 100.%
   end
   rule 'h1' do
     font style: :italic
-    margin 0
+    color 'white'
+    margin 5.px, 25.px
+    text shadow: 2.px
+    text shadow: '2px 2px black'
+    user select: 'none'
+  end
+  rule 'img.rodeo' do
+    user select: 'none'
+    position 'fixed'
   end
   rule '.window_handler' do
     display 'flex'
@@ -17,14 +27,14 @@ Paggio.css do
     flex wrap: 'wrap'
     justify content: 'space-evenly'
     align content: 'space-around'
-    gap 70.px, 30.px
-    padding 0, 25.px
+    gap 20.px, 20.px
+    #padding 0, 25.px
   end
-  rule '.guide' do
-    background color: 'red' #change to clear
-    flex 1
-    height 250.px
-    flex basis: 350.px
+  rule '.window' do
+    #background color: 'red' #change to clear
+    flex grow: 0
+    #height 250.px
+    #flex basis: 350.px
   end
   rule '.window-body' do
     min width: 220.px

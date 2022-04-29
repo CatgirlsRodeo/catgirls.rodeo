@@ -1,6 +1,5 @@
 Paggio.html do
   head do
-    script type: "text/javascript", src: "script.js"
     link rel: "stylesheet", href: "style.css"
     link rel: "stylesheet", href: "https://unpkg.com/xp.css"
     link rel: 'icon', type: 'image/x-icon', href: 'favicon.ico'
@@ -25,14 +24,14 @@ Paggio.html do
     #img.justicar(src: '/justicar.png', alt: 'Justicar', height: '400px')
     #h1 { "Hello world from Justicar" }
     div do
-      h1 { "this is a header ig" }
+      h1 { "Catgirls Rodeo" }
     end
-    hr
+    img(src: 'rodeo_by_urasato.png').rodeo
     div.window_handler do
-      25.times do
-        div.guide(style: "flex-basis: #{(220..350).to_a.sample}px") { 'red' }
-      end
-    end
+      #25.times do
+      #  div.guide(style: "flex-basis: #{(220..350).to_a.sample}px") { 'red' }
+      #end
+      #end
       25.times do
         div.window do
           div.draggable(class: 'title-bar') do
@@ -43,7 +42,7 @@ Paggio.html do
               button("aria-label": "Close").close
             end
           end
-          div(class: "window-body") { 
+          div(class: "window-body", style: "width: #{(250..450).to_a.sample}px") { 
             p { "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed elit lacinia orci maximus lobortis nec sed tellus. Aenean tempus, dui sit amet scelerisque condimentum, est odio feugiat dui, et suscipit dui lectus eget elit. Mauris sit amet mollis massa. Nullam vel fringilla lorem. Suspendisse semper nec nisi at pretium. Cras venenatis ex vitae orci porta facilisis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus euismod justo in metus sagittis lacinia. Nunc ante turpis, hendrerit vel lobortis nec, viverra at justo. Fusce mollis nec ipsum eu porttitor. Morbi sapien neque, lobortis at odio vitae, porttitor finibus turpis. Pellentesque sit amet urna nisl. Nulla consequat mi at hendrerit euismod. Sed sodales auctor eros." }
             p { "Suspendisse tincidunt luctus lacinia. In tincidunt mauris ac libero posuere vestibulum. Aenean ut commodo augue. Suspendisse fringilla euismod purus sed venenatis. In lacinia accumsan cursus. Vestibulum lobortis malesuada nisi, ut blandit lacus consequat a. Morbi non neque eu augue cursus imperdiet. Nulla non lectus et ex blandit eleifend vel nec felis. Fusce ultrices orci et sapien dictum, sed vehicula felis volutpat. Maecenas quis lacus convallis, pulvinar nunc id, tempus turpis. Morbi vitae sodales odio. Fusce id massa varius, pulvinar lectus ac, facilisis ex. Quisque condimentum feugiat nibh, volutpat hendrerit magna vehicula sed." }
             p { "Pellentesque non accumsan ante, a ultrices eros. Aliquam efficitur elit id sapien condimentum, a tempor nunc lobortis. Nulla pulvinar egestas posuere. Donec sit amet ex quis nisl vulputate venenatis. Integer dui augue, vestibulum a justo id, tristique mattis massa. Sed rutrum venenatis erat, gravida rutrum lorem tincidunt ut. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus quam sapien, tempus tempus risus a, suscipit condimentum erat. Quisque tincidunt eget ligula ut blandit. Nulla mattis tincidunt felis sodales malesuada. Phasellus volutpat maximus diam et congue. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam vitae efficitur urna. Aenean arcu ex, mollis ac dictum at, dictum pellentesque enim. Morbi aliquam consectetur augue at luctus." }
@@ -62,3 +61,5 @@ Paggio.html do
 =end
     end
   end
+    script type: "text/javascript", src: "script.js"
+end
