@@ -30,7 +30,7 @@ Paggio.html do
       div(class: 'title-bar-text') { "A Window With Stuff In It" }
       div(class: 'title-bar-controls') do
         #button("aria-label": "Minimize")
-        button("aria-label": "Maximize")
+        button("aria-label": "Maximize").maximize
         #button("aria-label": "Close")
       end
     end

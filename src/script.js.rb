@@ -9,6 +9,7 @@ mouse = Struct.new(:x, :y, :drag).new(0, 0, false)
 $document.ready do
   draggable = $document.css('.draggable')
   windows = $document.css('.window')
+  minimize_buttons = $document.css('.maximize')
 
   puts draggable.to_ary
 
@@ -26,6 +27,20 @@ $document.ready do
       position 'absolute'
       z index: draggable.length - index
     }
+  end
+
+  windows.each do |element|
+    element.on(:click, '.maximize') do |e|
+      e.prevent
+      element.style.apply {
+        top 0.px
+        left 0.px
+      }
+      element.at_css('.window-body').style.apply {
+        width ($document.window.size.inner_width - 16).px
+        height ($document.window.size.inner_height - 44).px
+      }
+    end
   end
 
   # resort window when one is clicked on
