@@ -1,31 +1,33 @@
 Paggio.css do
+  rule 'html' do
+    margin 0
+    height 100.%
+  end
   rule 'body' do
-    height 100.vh
+    margin 0
+    height 100.%
   end
-
-  rule '.justicar' do
-    top 134.px
-    left 400.px
-    opacity 0.7
-    position 'absolute'
-    width 400.px
-    height 'auto'
-  end
-
-  rule '.opal' do
-    color :dodgerblue
-  end
-
-  rule '.paggio' do
-    color :goldenrod
-  end
-
-  rule '.articles' do
-    color :limegreen
-    max width: 400.px
-  end
-
   rule 'h1' do
     font style: :italic
+    margin 0
+  end
+  rule '.window_handler' do
+    display 'flex'
+    flex direction: 'row'
+    flex wrap: 'wrap'
+    justify content: 'space-evenly'
+    align content: 'space-around'
+    gap 70.px, 30.px
+    padding 0, 25.px
+  end
+  rule '.guide' do
+    background color: 'red' #change to clear
+    flex 1
+    height 250.px
+    flex basis: 350.px
+  end
+  rule '.window-body' do
+    min width: 220.px
+    min height: 220.px
   end
 end

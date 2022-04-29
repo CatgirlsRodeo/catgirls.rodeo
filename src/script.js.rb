@@ -3,7 +3,7 @@ require 'native'
 require 'promise'
 require 'browser/setup/full'
 
-Position = Struct.new(:x, :y)
+Rectangle = Struct.new(:x, :y, :width, :height)
 mouse = Struct.new(:x, :y, :drag).new(0, 0, false)
 $maximized = Struct.new(:x, :y, :width, :height, :element).new(0, 0, 0, 0, false)
 
@@ -12,6 +12,7 @@ def maximize_window(element)
   if $maximized.element
     $maximized.element = false
     element.style.apply {
+      position 'absolute'
       top $maximized.y.px
       left $maximized.x.px
     }
@@ -26,6 +27,7 @@ def maximize_window(element)
     $maximized.width = element.at_css('.window-body').width
     $maximized.height = element.at_css('.window-body').height
     element.style.apply {
+      position 'fixed'
       top 0.px
       left 0.px
     }
@@ -37,16 +39,19 @@ def maximize_window(element)
 end
 
 $document.ready do
+  guide = $document.css('.guide')
   draggable = $document.css('.draggable')
   windows = $document.css('.window')
 
   puts draggable.to_ary
 
   draggable_cached_position = []
-  draggable.each do |element|
-    draggable_cached_position.push Position.new(
-      element.parent.position.x,
-      element.parent.position.y,
+  guide.each do |element|
+    draggable_cached_position.push Rectangle.new(
+      element.position.x + element.parent.position.x,
+      element.position.y + element.parent.position.y,
+      element.width - 15,
+      element.height,
     )
   end
   draggable.each_with_index do |element, index|
@@ -56,7 +61,18 @@ $document.ready do
       position 'absolute'
       z index: draggable.length - index
     }
+    element.parent.at_css('.window-body').style.apply {
+      width draggable_cached_position[index].width.px
+      height draggable_cached_position[index].height.px
+    }
   end
+
+  $document.at_css('.window_handler').remove
+
+  puts $document.scroll.height
+  $document.body.style.apply {
+    height ($document.scroll.height + 50).px
+  }
 
 
   # maximizes windows
@@ -67,6 +83,11 @@ $document.ready do
     end
     element.on(:dblclick, '.title-bar') do |e|
       maximize_window(element)
+    end
+    element.on(:click, '.close') do |e|
+      e.prevent
+      $maximized.element = false
+      element.remove
     end
   end
 
