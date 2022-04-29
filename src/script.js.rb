@@ -7,10 +7,7 @@ Position = Struct.new(:x, :y)
 mouse = Struct.new(:x, :y, :drag).new(0, 0, false)
 
 $document.ready do
-  title = $document.at_css('.draggable')
-
   draggable = $document.css('.draggable')
-  $draggable = draggable
   windows = $document.css('.window')
 
   puts draggable.to_ary
@@ -30,77 +27,40 @@ $document.ready do
       z index: draggable.length - index
     }
   end
-=begin
+
+  # resort window when one is clicked on
   windows.each do |element|
     element.on :mousedown do |e|
-      puts draggable.to_ary
-      draggable.unshift draggable.delete(e.target.child)
-
-      $draggable.each_with_index do |elem, index|
+      draggable.unshift draggable.delete(element.at_css('.title-bar'))
+      draggable.each_with_index do |elem, index|
         elem.parent.style.apply {
-          z index: $draggable.length - index
+          z index: draggable.length - index
         }
       end
     end
   end
-=end
 
-
+  # set window to "drag" mode when clicked on and reset when let go
   draggable.each do |element|
     element.on :mousedown do |e|
-      #puts (e.page.y.px - mouse.y)
-      draggable.unshift draggable.delete(element)
-
-      draggable.each_with_index do |element, index|
-        element.parent.style.apply {
-          z index: draggable.length - index
-        }
-      end
-
       mouse.drag = element
       mouse.x = e.page.x - element.parent.position.x
       mouse.y = e.page.y - element.parent.position.y
       element.parent.style.apply {
-        #top e.page.y.px
-        #left e.page.x.px
         top (e.page.y.px - mouse.y).px
         left (e.page.x.px - mouse.x).px
         position 'absolute'
       }
       $document.one :mouseup do |e|
         mouse.drag = false
-        #element.parent.style.apply {
-          #top e.page.y.px
-          #left e.page.x.px
-          #top element.position.y.px
-          #left element.position.x.px
-          #position 'absolute'
-        #}
       end
     end
   end
-=begin
-  $document.css('.window').each do |element|
-    element.on :mousedown do |e|
-      puts 'mouse downed'
-      puts e.target.child
-      puts 'array:'
-      puts draggable
-      draggable.unshift draggable.delete(e.target.child)
-      draggable.to_ary.each_with_index do |drg_element, index|
-        puts "doesnt have style? #{drg_element}"
-        drg_element.style.apply {
-          z index: draggable.length - index
-        }
-      end
-    end
-  end
-=end
+
+  # when a window is in "drag" mode, move window to mouse cursor
   $document.on :mousemove do |e|
     if mouse.drag
       mouse.drag.parent.style.apply {
-        #top e.page.y.px
-        #left e.page.x.px
         top (e.page.y.px - mouse.y).px
         left (e.page.x.px - mouse.x).px
       }
