@@ -5,11 +5,40 @@ require 'browser/setup/full'
 
 Position = Struct.new(:x, :y)
 mouse = Struct.new(:x, :y, :drag).new(0, 0, false)
+$maximized = Struct.new(:x, :y, :width, :height, :element).new(0, 0, 0, 0, false)
+
+
+def maximize_window(element)
+  if $maximized.element
+    $maximized.element = false
+    element.style.apply {
+      top $maximized.y.px
+      left $maximized.x.px
+    }
+    element.at_css('.window-body').style.apply {
+      width $maximized.width.px
+      height $maximized.height.px
+    }
+  else
+    $maximized.element = element
+    $maximized.x = element.position.x
+    $maximized.y = element.position.y
+    $maximized.width = element.at_css('.window-body').width
+    $maximized.height = element.at_css('.window-body').height
+    element.style.apply {
+      top 0.px
+      left 0.px
+    }
+    element.at_css('.window-body').style.apply {
+      width ($document.window.size.inner_width - 16).px
+      height ($document.window.size.inner_height - 44).px
+    }
+  end
+end
 
 $document.ready do
   draggable = $document.css('.draggable')
   windows = $document.css('.window')
-  minimize_buttons = $document.css('.maximize')
 
   puts draggable.to_ary
 
@@ -29,21 +58,19 @@ $document.ready do
     }
   end
 
+
+  # maximizes windows
   windows.each do |element|
     element.on(:click, '.maximize') do |e|
       e.prevent
-      element.style.apply {
-        top 0.px
-        left 0.px
-      }
-      element.at_css('.window-body').style.apply {
-        width ($document.window.size.inner_width - 16).px
-        height ($document.window.size.inner_height - 44).px
-      }
+      maximize_window(element)
+    end
+    element.on(:dblclick, '.title-bar') do |e|
+      maximize_window(element)
     end
   end
 
-  # resort window when one is clicked on
+  # re-sort windows when one is clicked on
   windows.each do |element|
     element.on :mousedown do |e|
       draggable.unshift draggable.delete(element.at_css('.title-bar'))
@@ -58,6 +85,7 @@ $document.ready do
   # set window to "drag" mode when clicked on and reset when let go
   draggable.each do |element|
     element.on :mousedown do |e|
+      next if $maximized.element
       mouse.drag = element
       mouse.x = e.page.x - element.parent.position.x
       mouse.y = e.page.y - element.parent.position.y
