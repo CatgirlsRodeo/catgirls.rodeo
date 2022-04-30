@@ -9,17 +9,24 @@ Paggio.css do
     background repeat: 'repeat'
     height 100.%
   end
+  rule '.title-bar-text' do
+    font family: 'Meleo'
+    #font size: 13.px
+    font size: 16.px
+  end
   rule 'h1' do
+    font family: 'MeleoItalic'
     font style: :italic
     color 'white'
-    margin 5.px, 25.px
-    text shadow: 2.px
-    text shadow: '2px 2px black'
+    margin 15.px, 25.px
+    text shadow: '3px 3px black'
     user select: 'none'
+    position 'fixed'
   end
   rule 'img.rodeo' do
     user select: 'none'
     position 'fixed'
+    margin top: 110.px
   end
   rule '.window_handler' do
     display 'flex'
@@ -28,7 +35,6 @@ Paggio.css do
     justify content: 'space-evenly'
     align content: 'space-around'
     gap 20.px, 20.px
-    #padding 0, 25.px
   end
   rule '.window' do
     #background color: 'red' #change to clear
@@ -39,5 +45,8 @@ Paggio.css do
   rule '.window-body' do
     min width: 220.px
     min height: 220.px
+    font family: 'Meleo'
+    #font size: 11.px
+    font size: 16.px
   end
 end

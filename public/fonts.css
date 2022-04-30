@@ -1,0 +1,10 @@
+@font-face {
+	font-family: Meleo;
+	src: url(meleo.woff);
+}
+
+@font-face {
+	font-family: MeleoItalic;
+	src: url(italic_meleo.woff);
+	font-weight: italic;
+}

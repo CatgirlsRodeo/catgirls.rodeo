@@ -114,7 +114,7 @@ $document.ready do
   draggable.each do |element|
     draggable_cached_position.push Rectangle.new(
       element.position.x + (-20..20).to_a.sample, #+ element.parent.position.x,
-      element.position.y + 25 + (-20..20).to_a.sample, #+ element.parent.position.y,
+      element.position.y + 110 + 25 + (-20..20).to_a.sample, #+ element.parent.position.y,
       element.width - 15,
       element.height,
     )
