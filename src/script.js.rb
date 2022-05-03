@@ -44,6 +44,8 @@ $document.ready do
   guide = $document.css('.guide')
   draggable = $document.css('.draggable')
   windows = $document.css('.window')
+  game_buttons = $document.css('.toggle_game').to_a
+  game_element_cache = {}
 
 
   draggable_cached_position = []
@@ -79,6 +81,30 @@ $document.ready do
         elem.parent.style.apply {
           z index: draggable.length - index
         }
+      end
+    end
+  end
+
+  game_buttons.each do |element|
+    #element.parent.at_css('.game_placeholder').hide
+
+    # this should be set by default somehow
+    elem = element.parent.at_css('.game_container')
+    game_element_cache[element] = elem
+    elem.remove
+
+    element.on :click do |e|
+      if !game_element_cache[element].nil?
+        element.inner_dom = "Close Game"
+        game_element_cache[element].prepend_to(element.parent)
+        game_element_cache[element] = nil
+        element.parent.at_css('.game_placeholder').hide
+      else
+        element.inner_dom = "Load Game"
+        elem = element.parent.at_css('.game_container')
+        game_element_cache[element] = elem
+        elem.remove
+        element.parent.at_css('.game_placeholder').show
       end
     end
   end

@@ -1,25 +1,9 @@
 target["index.html"] = Paggio.html do
   head do
+    link rel: "stylesheet", href: "https://unpkg.com/xp.css"
     link rel: "stylesheet", href: "style.css"
     link rel: "stylesheet", href: "fonts.css"
-    link rel: "stylesheet", href: "https://unpkg.com/xp.css"
     link rel: 'icon', type: 'image/x-icon', href: 'favicon.ico'
-    style do
-      rule '.window-body' do
-        resize 'both'
-        overflow 'auto'
-        width 250.px
-        height 250.px
-        margin right: 8.px
-        margin bottom: 5.px
-      end
-      rule '.window' do
-        display 'inline-block'
-      end
-      rule '.title-bar-text' do
-        user select: 'none'
-      end
-    end
   end
   body do
     #img.justicar(src: '/justicar.png', alt: 'Justicar', height: '400px')
