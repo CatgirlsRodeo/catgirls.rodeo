@@ -12,7 +12,8 @@ def maximize_window(element)
   if $maximized.element
     $maximized.element = false
     element.style.apply {
-      position 'absolute'
+      #position 'absolute'
+      position 'fixed'
       top $maximized.y.px
       left $maximized.x.px
     }
@@ -119,7 +120,8 @@ $document.ready do
       element.parent.style.apply {
         top (e.page.y.px - mouse.y).px
         left (e.page.x.px - mouse.x).px
-        position 'absolute'
+        #position 'absolute'
+        position 'fixed'
       }
       $document.one :mouseup do |e|
         mouse.drag = false
@@ -136,7 +138,6 @@ $document.ready do
       }
     end
   end
-
   draggable.each do |element|
     draggable_cached_position.push Rectangle.new(
       element.position.x + (-20..20).to_a.sample, #+ element.parent.position.x,
@@ -149,7 +150,7 @@ $document.ready do
     element.parent.style.apply {
       top draggable_cached_position[index].y.px
       left draggable_cached_position[index].x.px
-      position 'absolute'
+      position 'fixed'
       z index: draggable.length - index
     }
     element.parent.at_css('.window-body').style.apply {

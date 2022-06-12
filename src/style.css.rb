@@ -19,15 +19,68 @@ Paggio.css do
     font family: 'MeleoItalic'
     font style: :italic
     color 'white'
-    margin 15.px, 25.px
+    margin 25.px, 35.px
     text shadow: '3px 3px black'
     user select: 'none'
+    box shadow: '0px 0px 5px 5px rgba(0,0,0,0.75)'
+    background color: 'rgba(0,0,0,0.75)'
+    float 'left'
+  end
+  rule '.titlebar_contain' do
+    height 100.px
+    background 'inherit'
     position 'fixed'
+    background color: 'white'
+  end
+  rule '.article_links' do
+    display 'inline-flex'
+    flex 0, 1, 'auto'
+    flex direction: 'column'
+    gap 30.px
+    text align: 'center'
+    padding top: 50.px
+  end
+  rule '.link_background' do
+    display 'inline'
+    box shadow: '0px 0px 5px 5px rgba(0,0,0,0.75)'
+    background color: 'rgba(0,0,0,0.75)'
+  end
+  rule '.center_article_links' do
+    text align: 'center'
+  end
+  rule 'a h2' do
+    font family: 'MeleoItalic'
+    position 'relative'
+    text decoration: 'underline'
+    display 'inline'
+    height 100.%
+    z index: 1
+    margin 0.px
+  end
+  rule 'a.article_link' do
+    display 'inline'
+    text shadow: '3px 3px black'
+    padding 0.px, 10.px
+  end
+  rule 'a' do
+    color 'white'
+    text decoration: 'underline'
+  end
+  rule 'a:hover' do
+    color '#dd5eac'
+    text decoration: 'underline'
+    cursor 'pointer'
+  end
+  rule 'a:visited' do
+    color '#e9e9e9'
+    text decoration: 'underline'
   end
   rule 'img.rodeo' do
     user select: 'none'
     position 'fixed'
-    margin top: 110.px
+    margin top: -100.px
+    left 50.px
+    z index: -1
   end
   rule '.window_handler' do
     display 'flex'
@@ -37,10 +90,13 @@ Paggio.css do
     align content: 'space-around'
     gap 20.px, 20.px
   end
+  rule '.title-bar' do
+    cursor 'move'
+  end
   rule '.window' do
     #background color: 'red' #change to clear
     flex grow: 0
-    display 'inline-block'
+    display 'absolute'
     #height 250.px
     #flex basis: 350.px
   end

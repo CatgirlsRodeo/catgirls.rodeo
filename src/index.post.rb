@@ -8,8 +8,28 @@ target["index.html"] = Paggio.html do
   body do
     #img.justicar(src: '/justicar.png', alt: 'Justicar', height: '400px')
     #h1 { "Hello world from Justicar" }
-    div do
-      h1 { "Catgirls Rodeo" }
+    h1 { "Catgirls Rodeo" }
+
+    div.center_article_links do
+      div.article_links do
+          div.link_background do
+            a.article_link do
+              h2 do
+                'Article about Something'
+              end
+          end
+        end
+        a.article_link do
+          h2 do
+            'Article about Something Else'
+          end
+        end
+        a.article_link do
+          h2 do
+            'Article about Nothing'
+          end
+        end
+      end
     end
     img(src: 'rodeo_by_urasato.png').rodeo
     div.window_handler do
@@ -19,7 +39,7 @@ target["index.html"] = Paggio.html do
       #end
       keys = Justicar::PreProcessor.articles.keys.sort
       keys.reverse_each do |key|
-      #25.times do
+        #25.times do
         div.window do
           div.draggable(class: 'title-bar') do
             div(class: 'title-bar-text') { 
@@ -37,7 +57,7 @@ target["index.html"] = Paggio.html do
         end
       end
 =begin
-  h2.paggio do
+h2.paggio do
     'Hello world from Paggi!'
   end
   p.paggio do
@@ -46,5 +66,5 @@ target["index.html"] = Paggio.html do
 =end
     end
   end
-    script type: "text/javascript", src: "script.js"
+  script type: "text/javascript", src: "script.js"
 end
