@@ -34,9 +34,31 @@ def maximize_window(element)
       left 0.px
     }
     element.at_css('.window-body').style.apply {
-      width ($document.window.size.inner_width - 16 - 18).px
+      width ($document.window.size.inner_width - 30).px
       height ($document.window.size.inner_height - 44).px
       resize 'none'
+    }
+  end
+end
+
+def open_window(iframe_url)
+  windows = $document.at_css('.window_handler')
+  elem = Browser::DOM::Element.new(:div)
+  elem.add_class 'window'
+  windows << elem
+  elem.inner_dom do
+    div.draggable(class: 'title-bar') do
+      div(class: 'title-bar-text') { 
+        key.to_s
+      }
+      div(class: 'title-bar-controls') do
+        #button("aria-label": "Minimize")
+        button("aria-label": "Maximize").maximize
+        button("aria-label": "Close").close
+      end
+    end
+    div(class: "window-body iframe_container") { 
+      iframe(src: iframe_url, class: 'iframe_item') {}
     }
   end
 end
@@ -53,9 +75,10 @@ $document.ready do
 
   #$document.at_css('.window_handler').remove
 
-  $document.body.style.apply {
-    height ($document.scroll.height + 50).px
-  }
+  #$document.body.style.apply {
+  #  height ($document.scroll.height + 50).px
+  #  #height (50).px
+  #}
 
 
   # maximizes windows
@@ -118,8 +141,8 @@ $document.ready do
       mouse.x = e.page.x - element.parent.position.x
       mouse.y = e.page.y - element.parent.position.y
       element.parent.style.apply {
-        top (e.page.y.px - mouse.y).px
-        left (e.page.x.px - mouse.x).px
+        top (e.page.y.px - mouse.y - $document.scroll.y).px
+        left (e.page.x.px - mouse.x - $document.scroll.x).px
         #position 'absolute'
         position 'fixed'
       }
@@ -133,8 +156,8 @@ $document.ready do
   $document.on :mousemove do |e|
     if mouse.drag
       mouse.drag.parent.style.apply {
-        top (e.page.y.px - mouse.y).px
-        left (e.page.x.px - mouse.x).px
+        top (e.page.y.px - mouse.y - $document.scroll.y).px
+        left (e.page.x.px - mouse.x - $document.scroll.x).px
       }
     end
   end

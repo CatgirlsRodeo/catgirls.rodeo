@@ -12,21 +12,14 @@ target["index.html"] = Paggio.html do
 
     div.center_article_links do
       div.article_links do
+        Justicar::PreProcessor.articles.keys.sort.each do |date|
+          article = Justicar::PreProcessor.articles[date]
           div.link_background do
-            a.article_link do
+            a.article_link(href: "/articles/#{article[0].tr(' ', '_')}.html", onclick: "Opal.eval(\"open_window(\\\"/articles/raw/#{article[0].tr(' ', '_')}.html\\\")\");return false;") do
               h2 do
-                'Article about Something'
+                article[0]
               end
-          end
-        end
-        a.article_link do
-          h2 do
-            'Article about Something Else'
-          end
-        end
-        a.article_link do
-          h2 do
-            'Article about Nothing'
+            end
           end
         end
       end

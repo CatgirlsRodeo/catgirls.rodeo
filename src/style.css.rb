@@ -1,7 +1,7 @@
 Paggio.css do
   rule 'html' do
     margin 0
-    height 100.%
+    #height 100.%
   end
   rule 'body' do
     margin 0
@@ -39,6 +39,7 @@ Paggio.css do
     gap 30.px
     text align: 'center'
     padding top: 50.px
+    max width: 500.px
   end
   rule '.link_background' do
     display 'inline'
@@ -78,8 +79,9 @@ Paggio.css do
   rule 'img.rodeo' do
     user select: 'none'
     position 'fixed'
-    margin top: -100.px
+    #margin top: -100.px
     left 50.px
+    top 120.px
     z index: -1
   end
   rule '.window_handler' do
@@ -113,6 +115,21 @@ Paggio.css do
     overflow 'auto'
     width 250.px
     height 250.px
+  end
+  rule '.iframe_container' do
+    display 'flex'
+    width 100.%
+      height 100.%
+      overflow 'hidden'
+  end
+  rule '.iframe_item' do
+    flex grow: 1
+    border 'none'
+    margin 0
+    padding 0
+    width 100.%
+      height 100.%
+      flex direction: 'column'
   end
   rule '.game_container' do
     border radius: 0.5.rem

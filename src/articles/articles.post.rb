@@ -2,7 +2,7 @@ target ||= {}
 target["raw"] ||= {}
 Justicar::PreProcessor.articles.keys.sort.each do |date|
   article = Justicar::PreProcessor.articles[date]
-  target["raw"]["#{article[0]}.html"] = Paggio.html do
+  target["raw"]["#{article[0].tr(' ', '_')}.html"] = Paggio.html do
     head do
       link rel: "stylesheet", href: "https://unpkg.com/xp.css"
       link rel: "stylesheet", href: "/style.css"
@@ -13,7 +13,7 @@ Justicar::PreProcessor.articles.keys.sort.each do |date|
       article[1]
     end
   end
-  target["#{article[0]}.html"] = Paggio.html do
+  target["#{article[0].tr(' ', '_')}.html"] = Paggio.html do
     head do
       link rel: "stylesheet", href: "https://unpkg.com/xp.css"
       link rel: "stylesheet", href: "/style.css"

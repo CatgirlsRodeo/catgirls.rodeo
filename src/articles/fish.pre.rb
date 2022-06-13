@@ -4,7 +4,7 @@ Justicar::PreProcessor.articles ||= {} # ensure the has exists
 # yr/mo/dy
 title = 'Article about making Justicar or something idk'
 Justicar::PreProcessor.articles[220429] = [
-  title.tr(' ', '_'),
+  title,#.tr(' ', '_'),
   Paggio.html! do
     #head do
     #  link rel: "stylesheet", href: "https://unpkg.com/xp.css"
@@ -13,12 +13,12 @@ Justicar::PreProcessor.articles[220429] = [
     #  link rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'
     #end
     #body(style: 'background:none') do
-      div(class: 'window-body') do
-        h3 title.to_s
-        p {
-          'yep some stuff or whatever'
-        }
-      end
-    end
+    #div(class: 'window-body', style: 'resize=initial;') do
+    h3 title
+    p {
+      'yep some stuff or whatever'
+    }
+  end
+  #end
   #end
 ]
