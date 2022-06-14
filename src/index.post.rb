@@ -8,7 +8,7 @@ target["index.html"] = Paggio.html do
   body do
     #img.justicar(src: '/justicar.png', alt: 'Justicar', height: '400px')
     #h1 { "Hello world from Justicar" }
-    h1 { "Catgirls Rodeo" }
+    h1.title { a.title(href: '/') { "Catgirls Rodeo"} }
 
     div.center_article_links do
       div.article_links do
@@ -16,6 +16,7 @@ target["index.html"] = Paggio.html do
           article = Justicar::PreProcessor.articles[date]
           div.link_background do
             a.article_link(href: "/articles/#{article[0].tr(' ', '_')}.html", onclick: "Opal.eval(\"open_window(\\\"/articles/raw/#{article[0].tr(' ', '_')}.html\\\")\");return false;") do
+            #a.article_link(onclick: "Opal.eval(\"open_window(\\\"/articles/raw/#{article[0].tr(' ', '_')}.html\\\")\");return false;") do
               h2 do
                 article[0]
               end

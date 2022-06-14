@@ -22,11 +22,17 @@ Justicar::PreProcessor.articles.keys.sort.each do |date|
     end
     body do
       div do
-        h1 { "Catgirls Rodeo" }
+        h1.title { 
+          a.title(href: '/') { "Catgirls Rodeo"}
+        }
       end
       img(src: '/rodeo_by_urasato.png').rodeo
       #iframe(src: "raw/#{article[0]}.html", allowtransparency: 'true', frameBorder: '0', style: 'width:100vw;height:80vh') {}
-      div { article[1] }
+    div.center_article_links do
+      div.article_links do
+        div.link_background(style: 'color: white') { article[1] }
+    end
+    end
     end
   end
 end

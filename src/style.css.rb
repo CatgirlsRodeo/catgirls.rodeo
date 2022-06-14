@@ -15,7 +15,7 @@ Paggio.css do
     font size: 16.px
     user select: 'none'
   end
-  rule 'h1' do
+  rule 'h1.title' do
     font family: 'MeleoItalic'
     font style: :italic
     color 'white'
@@ -48,6 +48,7 @@ Paggio.css do
   end
   rule '.center_article_links' do
     text align: 'center'
+    margin 0.px, 20.px
   end
   rule 'a h2' do
     font family: 'MeleoItalic'
@@ -65,16 +66,29 @@ Paggio.css do
   end
   rule 'a' do
     color 'white'
-    text decoration: 'underline'
+    text decoration: 'none'
+  end
+  rule 'a.title' do
+    color 'white'
+    text decoration: 'none'
   end
   rule 'a:hover' do
     color '#dd5eac'
     text decoration: 'underline'
     cursor 'pointer'
   end
+  rule 'a.title:hover' do
+    color '#dd5eac'
+    text decoration: 'underline'
+    cursor 'pointer'
+  end
   rule 'a:visited' do
     color '#e9e9e9'
-    text decoration: 'underline'
+    text decoration: 'none'
+  end
+  rule 'a.title:visited' do
+    color 'white'
+    text decoration: 'none'
   end
   rule 'img.rodeo' do
     user select: 'none'
@@ -98,7 +112,7 @@ Paggio.css do
   rule '.window' do
     #background color: 'red' #change to clear
     flex grow: 0
-    display 'absolute'
+    position 'fixed'
     #height 250.px
     #flex basis: 350.px
   end
@@ -113,8 +127,8 @@ Paggio.css do
     padding bottom: 10.px
     resize 'both'
     overflow 'auto'
-    width 250.px
-    height 250.px
+    width 500.px
+    height 600.px
   end
   rule '.iframe_container' do
     display 'flex'
