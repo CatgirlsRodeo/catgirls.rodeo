@@ -15,16 +15,34 @@ Paggio.css do
     font size: 16.px
     user select: 'none'
   end
+  rule 'header' do
+    display 'flex'
+    flex direction: 'column'
+    margin 25.px, 35.px
+    text shadow: '3px 3px black'
+    user select: 'none'
+    box shadow: '0px 0px 5px 5px rgba(0,0,0,0.65)'
+    background color: 'rgba(0,0,0,0.65)'
+    float 'left'
+  end
+  rule 'h1' do
+    margin top: 5.px
+  end
   rule 'h1.title' do
     font family: 'MeleoItalic'
     font style: :italic
     color 'white'
-    margin 25.px, 35.px
+    margin 'auto'
+  end
+  rule '.header_link' do
+    font family: 'Meleo'
+    font style: :italic
+    font size: 2.em
+    color 'white'
+    margin 'auto'
+    margin top: 5.px
+    margin left: 50.px
     text shadow: '3px 3px black'
-    user select: 'none'
-    box shadow: '0px 0px 5px 5px rgba(0,0,0,0.75)'
-    background color: 'rgba(0,0,0,0.75)'
-    float 'left'
   end
   rule '.titlebar_contain' do
     height 100.px
@@ -36,27 +54,28 @@ Paggio.css do
     display 'inline-flex'
     flex 0, 1, 'auto'
     flex direction: 'column'
+    box shadow: '0px 0px 5px 5px rgba(0,0,0,0.95)'
+    background color: 'rgba(0,0,0,0.95)'
     gap 30.px
     text align: 'center'
-    padding top: 50.px
-    max width: 500.px
+    margin top: 50.px
+    max width: 550.px
+    margin bottom: 25.px
   end
   rule '.link_background' do
     display 'inline'
-    box shadow: '0px 0px 5px 5px rgba(0,0,0,0.75)'
-    background color: 'rgba(0,0,0,0.75)'
+    padding 10.px, 10.px
   end
   rule '.center_article_links' do
     text align: 'center'
     margin 0.px, 20.px
   end
   rule 'a h2' do
-    font family: 'MeleoItalic'
+    font size: 2.7.em
+    font family: 'Meleo'
     position 'relative'
-    text decoration: 'underline'
     display 'inline'
     height 100.%
-    z index: 1
     margin 0.px
   end
   rule 'a.article_link' do
@@ -163,5 +182,28 @@ Paggio.css do
   end
   rule '.toggle_game' do
     margin left: 30.px
+  end
+  rule 'article' do
+    text align: 'left'
+    padding 0.px, 10.px
+  end
+  rule 'article h1' do
+    text aligh: 'center'
+    font size: 3.em
+  end
+  rule 'article h2' do
+    font size: 2.5.em
+    text decoration: 'underline'
+  end
+  rule 'article h3' do
+    font size: 2.em
+    text decoration: 'underline'
+  end
+  rule 'article h4' do
+    font size: 2.em
+    text decoration: 'underline'
+  end
+  rule 'article p' do
+    font size: 1.5.em
   end
 end

@@ -97,7 +97,7 @@ def add_window_functionality(element)
   end
 end
 
-def open_window(iframe_url)
+def open_window(iframe_url, title = '')
   windows = $document.at_css('.window_handler')
   elem = Browser::DOM::Element.new(:div)
   elem.add_class 'window'
@@ -105,7 +105,7 @@ def open_window(iframe_url)
   elem.inner_dom do
     div.draggable(class: 'title-bar') do
       div(class: 'title-bar-text') { 
-        key.to_s
+        title.to_s
       }
       div(class: 'title-bar-controls') do
         #button("aria-label": "Minimize")

@@ -1,5 +1,6 @@
 require 'Justicar'
 require 'opal-browser'
+require 'paggio/markdown'
 
 desc "Build your website"
 task :build do
