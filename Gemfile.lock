@@ -6,6 +6,8 @@ GEM
       opal-browser (~> 0.3.3)
       paggio (~> 0.3.0)
     ast (2.4.2)
+    kramdown (2.4.0)
+      rexml
     opal (1.5.0)
       ast (>= 2.3.0)
       parser (~> 3.0, >= 3.0.3.2)
@@ -16,6 +18,7 @@ GEM
     parser (3.1.2.0)
       ast (~> 2.4.1)
     rake (13.0.6)
+    rexml (3.2.5)
     webrick (1.7.0)
 
 PLATFORMS
@@ -23,6 +26,7 @@ PLATFORMS
 
 DEPENDENCIES
   Justicar (~> 1.0.0)
+  kramdown (~> 2.4)
   opal-browser (~> 0.3.3)
   rake (~> 13.0)
   webrick (~> 1.7)
