@@ -16,10 +16,10 @@ target["index.html"] = Paggio.html do
 
     div.center_article_links do
       div.article_links do
-        Justicar::PreProcessor.articles.keys.sort.each do |date|
+        Justicar::PreProcessor.articles.keys.sort.reverse_each do |date|
           article = Justicar::PreProcessor.articles[date]
           div.link_background do
-            a.article_link(href: "/articles/#{article[0].tr(' ', '_')}.html", onclick: "Opal.eval(\"open_window(\\\"/articles/raw/#{article[0].tr(' ', '_')}.html\\\", \\\"#{date.to_s}\\\")\");return false;") do
+            a.article_link(href: "/articles/#{article[0].tr(' ', '_').downcase}.html", onclick: "Opal.eval(\"open_window(\\\"/articles/raw/#{article[0].tr(' ', '_').downcase}.html\\\", \\\"#{date.to_s}\\\")\");return false;") do
             #a.article_link(onclick: "Opal.eval(\"open_window(\\\"/articles/raw/#{article[0].tr(' ', '_')}.html\\\")\");return false;") do
               h2 do
                 article[0]

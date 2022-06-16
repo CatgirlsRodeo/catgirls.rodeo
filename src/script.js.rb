@@ -35,8 +35,8 @@ def maximize_window(element)
       left 0.px
     }
     element.at_css('.window-body').style.apply {
-      width ($document.window.size.inner_width - 30).px
-      height ($document.window.size.inner_height - 44).px
+      width ($document.window.size.inner_width - 29).px
+      height ($document.window.size.inner_height - 50).px
       resize 'none'
     }
   end

@@ -7,10 +7,12 @@ Paggio.css do
     margin 0
     background image: 'url("90s_arcade.png")'
     background repeat: 'repeat'
+    overflow y: 'scroll'
     height 100.%
   end
   rule '.title-bar-text' do
     font family: 'Meleo'
+    font weight: 500
     #font size: 13.px
     font size: 16.px
     user select: 'none'
@@ -30,13 +32,14 @@ Paggio.css do
   end
   rule 'h1.title' do
     font family: 'MeleoItalic'
-    font style: :italic
+    font weight: 500
+    #font style: :italic
     color 'white'
     margin 'auto'
   end
   rule '.header_link' do
     font family: 'Meleo'
-    font style: :italic
+    #font style: :italic
     font size: 2.em
     color 'white'
     margin 'auto'
@@ -73,6 +76,7 @@ Paggio.css do
   rule 'a h2' do
     font size: 2.7.em
     font family: 'Meleo'
+    font weight: 500
     position 'relative'
     display 'inline'
     height 100.%
@@ -84,10 +88,17 @@ Paggio.css do
     padding 0.px, 10.px
   end
   rule 'a' do
-    color 'white'
+    color '#6dccec'
     text decoration: 'none'
   end
   rule 'a.title' do
+    color 'white'
+    text decoration: 'none'
+    font family: 'MeleoItalic'
+    font weight: 500
+    #font style: :italic
+  end
+  rule 'a.article_link' do
     color 'white'
     text decoration: 'none'
   end
@@ -101,11 +112,20 @@ Paggio.css do
     text decoration: 'underline'
     cursor 'pointer'
   end
+  rule 'a.article_link:hover' do
+    color '#dd5eac'
+    text decoration: 'underline'
+    cursor 'pointer'
+  end
   rule 'a:visited' do
-    color '#e9e9e9'
+    color '#324797'
     text decoration: 'none'
   end
   rule 'a.title:visited' do
+    color 'white'
+    text decoration: 'none'
+  end
+  rule 'a.article_link:visited' do
     color 'white'
     text decoration: 'none'
   end
@@ -114,7 +134,7 @@ Paggio.css do
     position 'fixed'
     #margin top: -100.px
     left 50.px
-    top 120.px
+    top 80.px
     z index: -1
   end
   rule '.window_handler' do
