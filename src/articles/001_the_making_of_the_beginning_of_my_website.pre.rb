@@ -10,15 +10,15 @@ Justicar::PreProcessor.articles['2022/06/16'] = [
       markdown <<-MD
     # #{title}
  
-    Finally after months of procrastination and slow work this website is at a state I can be happy with to deploy.
+    Finally, after months of procrastination and slow work this website is at a state I can be happy with to deploy.
     All I really wanted or needed was a website where I could write down my thoughts and progress in a blog post style format as well as some fancy custom styling.
     There are plenty of frameworks or static site generators that exist which could do any of that.
     Plenty even in Ruby, my language of choice. Rails, Jenkins, many more I\\\'ve seen and not seen but ultimately I decided to go with none of them.
 
     It\\\'s like the difference between putting together an Ikea table vs measuring, cutting, and making it yourself.
-    Sure you picked out the Ikea table but it doesnt compare to the feeling of using something you built.
+    Sure you picked out the Ikea table but it doesn\\\'t compare to the feeling of using something you built.
     Websites are a personal thing, it\\\'s your very own real estate on the internet.
-    Its your mark on the web so why do something that is bog-standard boring. All these framworks and social media sites seem to have just depressingly sapped away that creativity.
+    It\\\'s your mark on the web so why do something that is bog-standard boring. All these frameworks and social media sites seem to have just depressingly sapped away that creativity.
 
     When the project is the measuring and cutting kind then it becomes more personal.
     Or at least that\\\'s the idea: you can make something you are proud of so that you keep working on it and making it better.
