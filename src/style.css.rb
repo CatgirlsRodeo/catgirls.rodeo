@@ -62,7 +62,7 @@ Paggio.css do
     gap 30.px
     text align: 'center'
     margin top: 50.px
-    max width: 550.px
+    max width: 700.px
     margin bottom: 25.px
   end
   rule '.link_background' do
@@ -133,7 +133,7 @@ Paggio.css do
     user select: 'none'
     position 'fixed'
     #margin top: -100.px
-    left 50.px
+    left 0.px
     top 80.px
     z index: -1
   end
@@ -224,6 +224,37 @@ Paggio.css do
     text decoration: 'underline'
   end
   rule 'article p' do
-    font size: 1.5.em
+    font size: 18.px
+    overflow y: 'auto'
+  end
+  rule 'code' do
+    white space: 'pre'
+    font family: 'Sono'
+    box shadow: 'rgba(255,255,255,.1) 0 1px 0,rgba(0,0,0,.8) 0 1px 7px 0 inset'
+    background '#272822'
+    font size: 12.px
+    padding 2.px, 5.px
+    #color '#e6db74'
+  end
+  rule 'span' do
+  end
+  rule '.code' do
+    font family: 'Sono !important'
+  end
+  rule 'pre.code' do
+    box shadow: 'rgba(255,255,255,.1) 0 1px 0,rgba(0,0,0,.8) 0 1px 7px 0 inset'
+  end
+  rule 'pre *' do
+    font family: 'Sono !important'
+  end
+  rule 'code.code' do
+    padding 3.px, 0, 0, 0
+    box shadow: 'none'
+  end
+  rule '.toolbar-item' do
+    margin "0px 3px"
+  end
+  rule 'li' do
+    font size: 16.px
   end
 end

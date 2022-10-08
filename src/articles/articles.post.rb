@@ -8,9 +8,10 @@ Justicar::PreProcessor.articles.keys.sort.each do |date|
       link rel: "stylesheet", href: "/style.css"
       link rel: "stylesheet", href: "/fonts.css"
       link rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'
+      link rel: 'stylesheet', href: '/prism.css'
     end
     body(style: 'background:none') do
-      article[1]
+      article[1] + "<script src=\"/prism.js\"></script>"
     end
   end
   target["#{article[0].tr(' ', '_').downcase}.html"] = Paggio.html do
@@ -19,6 +20,7 @@ Justicar::PreProcessor.articles.keys.sort.each do |date|
       link rel: "stylesheet", href: "/style.css"
       link rel: "stylesheet", href: "/fonts.css"
       link rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'
+      link rel: 'stylesheet', href: '/prism.css'
     end
     body do
       div do
@@ -34,6 +36,8 @@ Justicar::PreProcessor.articles.keys.sort.each do |date|
         div.article_links do
           div.link_background(style: 'color: white') { article[1] }
         end
+      end
+      script src: '/prism.js' do
       end
     end
   end

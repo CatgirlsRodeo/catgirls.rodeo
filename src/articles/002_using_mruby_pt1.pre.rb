@@ -1,0 +1,297 @@
+Justicar::PreProcessor.articles ||= {} # ensure the has exists
+
+# assign the result to a hash to be generated later
+# yr/mo/dy
+title = "Using Mruby(Part 1) - Setting up Your First Gem"
+Justicar::PreProcessor.articles['2022/06/17'] = [
+  title,#.tr(' ', '_'),
+  Paggio.html! do
+    article do
+      markdown <<-MD
+# #{title}
+
+When I first encountered mruby over a year ago, I was very intrigued by it but the lack of instruction for how to use it in tandem with C libraries unfortunatly kept me from every being able to play around much with it. Eventually I teamed up with a friend, we wanted to use mruby in tandem with raylib to make a game for the then upcoming raylib gamejam. With this deadline in mind we put our nose to the grindstone and eventually figured out all the bindings api we needed for raylib just a day before the gamejam began, just in time. The ease and elegance of programming our game in ruby led our game [Orc: Arena of Time](https://itch.io/jam/raylib-5k-gamejam/rate/1367070) to be awarded first place in the gamejam :D. 
+
+However it was tough figuring out the api. Information was scattered all over the place, some of it outdated or missing. So to remedy this for both myself and others I am making this guide where developers can quickly reference it to quickly and easily create bindings using mruby and C. Without futher ado: here is the no fluff guide to using mruby.
+
+## The Absolute Basics
+
+The 2 good documentation you can use for getting started would be the mruby website and the github. The [mruby website](https://mruby.org/docs/articles/executing-ruby-code-with-mruby.html) details a few common ways of executing ruby code. When writing bindings, from this list we will be doing something similar to the \\\"Source code (.c)\\\" method to bind a C library to Ruby. This will then allow us to write Ruby code using the C library. Awesome!
+
+      MD
+
+      pre.code do
+        code(class: "line-numbers language-c code") do
+          %{
+// the "Source code (.c)" example from the mruby website
+#include &lt;mruby.h&gt;
+#include &lt;mruby/compile.h&gt;
+
+int
+main(void)
+{
+  mrb_state *mrb = mrb_open();
+  if (!mrb) { /* handle error */ }
+  // mrb_load_string(mrb, str) to load from NULL terminated strings
+  // mrb_load_nstring(mrb, str, len) for strings without null terminator or with known length
+  mrb_load_string(mrb, "puts 'hello world'");
+  mrb_close(mrb);
+  return 0;
+}
+          }
+        end
+      end
+
+      markdown <<-MD
+
+The [github documentation](https://github.com/mruby/mruby/tree/master/examples/mrbgems/c_and_ruby_extension_example) gives us the barebones example for setting up a gem but not much more then that. Still useful though. There is also some more documentation in the [guides directory]() that has a couple useful pages such as the mrbgems markdown file and the compile markdown file. These files are where I got a lot of my foundational knowledge of using mruby. However sadly these are lacking the more indepth instructions for how to create bindings. Feel free to read as much as your find necassary, I will explain what is required to get started but you may want to know more in depth how to customize your setup.
+
+## Setup and Making a Gem
+
+For this guide I will make some simple bindings for Raylib. Create a new directory and name it whatever your want your gem to be called. I will be calling it `mruby_example_bindings`. Once the directory is created go into it and initialize it as a git repository with ```git init```.
+
+### Directory Structure
+
+Mruby gems follow a specific directory structure. The documentation in the official mruby github repo explains this well and I will post their file tree explanation here:
+      MD
+
+      pre.code do
+        code(class: 'line-numbers code language-none') do
+          %{
++- GEM_NAME             <- Name of GEM
+    |
+    +- README.md        <- Readme for GEM
+    |
+    +- mrbgem.rake      <- GEM Specification
+    |
+    +- include/         <- Header for Ruby extension (will exported)
+    |
+    +- mrblib/          <- Source for Ruby extension
+    |
+    +- src/             <- Source for C extension
+    |
+    +- tools/           <- Source for Executable (in C)
+    |
+    +- test/            <- Test code (Ruby)
+          }
+        end
+      end
+
+      markdown <<-MD
+
+      From these the `mrbgem.rake` file shown on line 5 above is critical and the gem will not compile without it. So lets do that.
+
+      MD
+
+
+      pre.code do
+        code(class: 'line-numbers code language-ruby') do
+          %{
+MRuby::Gem::Specification.new('mruby_example_bindings') do |spec|
+  spec.license = 'MIT'
+  spec.author  = '_Tradam'
+end
+          }
+        end
+      end
+
+      markdown <<-MD
+
+      For a bare bones gem, the only things critical are the name of the gem(shown in the brackets on line 1), the license, and the author. We will be adding more specifications later as they become necassary but for now this is enough.
+
+      ### Hello World in C
+
+      Next we will write out the C part of our gem to get a simple hello world printing out from the C side called using ruby. Looking at the structure above we need to create an `src` directory and then start putting our C code in there, so lets do that.
+
+      MD
+
+      pre.code do
+        code(class: "line-numbers language-none code") do
+          %{
+mruby_example_bindings
+&#x251C;&#x2500;&#x2500; mrbgem.rake
+&#x2514;&#x2500;&#x2500; src
+    &#x2514;&#x2500;&#x2500; main.c
+          }
+        end
+      end
+
+      markdown <<-MD
+
+      Now lets fill out our main.c file with a basic hello world. This is pretty similar to what is done in the (git documentation)[] and the (mruby website)[].
+
+      MD
+
+      pre.code do
+        code(class: "line-numbers language-c code") do
+          %{
+#include &lt;mruby.h&gt;
+#include &lt;stdio.h&gt;
+
+// defining the function to be later bound to a ruby method
+static mrb_value
+mrb_hello_world(mrb_stat *mrb, mrb_value self)
+{
+	printf("Hello World");
+
+	return mrb_nil_value(); // return null
+}
+
+// gem initializer
+void
+mrb_mruby_example_bindings_gem_init(mrb_state* mrb) {
+	struct RClass *class_binding_example = mrb_define_module(mrb, "Example");
+	mrb_define_class_method(
+      mrb,                    // Mruby VM state
+      class_binding_example,  // Class we bind method to
+      "say_hello",            // Name of method
+      mrb_hello_world,        // Function we are binding as a method
+      MRB_ARGS_NONE()         // How many arguments are optional/required
+    );
+}
+
+// gem finalizer
+void
+mrb_mruby_example_bindings_gem_final(mrb_state* mrb) {
+
+}
+          }
+        end
+      end
+
+      markdown <<-MD
+
+      Lets go step by step and explain what is the purpose of our code.
+
+      On line 1 we have to include the mruby header for various core mruby functionality. It doesnt include everything so in the future we will see that we need to include more headers depending on what additional ruby functionality we need to access from our C code. The name here of the function is not just an optional convention but is instead required. It must follow the pattern of `mrb_<your_gem_name>_gem_init`.
+
+      Starting on line 5 we declare our C function which will be binded to Ruby. However just this declaration does not make it accessable from ruby yet, we will see how to do that soon. As Ruby requires every method to return some kind of value we must state that the return value is `mrb_value`. Naming the function we could name it anything, however prefixing the function with `mrb_` is a common convention.
+
+      The function parameters must always be an `mrb_state` and `mrb_value` where the former is the state of the Ruby VM and the latter is the value of `self` Ruby object.
+
+      The content of our function consists of our chosen C code, but also a return. As stated before, every method in Ruby will return something. Since we dont have anything to return we can just return the Ruby `Nil` value which can be done by using the built in `mrb_nil_value()` function.
+
+      Line 6 we begin declaring the gem initializer. This is a requirement for making gems with mruby, and it is also where we bind our previously declared C functions to Ruby methods. 
+
+      Line 8 is creating a Ruby module named &quot;Example&quot; that we can then later add definitions to. We store it in a variable so that we can utilize it for that purpose. On line 9 we bind our C function to a Ruby method which is defined under the previously defined module.
+
+      Line 13 is the last function that is required for an mruby gem to work and it is the finalizer. This function will be executed when the Ruby VM is terminated. We dont really have anything to clean up when this happens so we can just make it blank. Like the init function, the naming convention here is required and not optional. It must follow the pattern of `mrb_<your_gem_name>_gem_final`.
+
+      ### Building and Running our Gem
+
+      Outside our gem directory we need to clone the mruby git repository. `git clone https://github.com/mruby/mruby`. Mruby uses a special custom toolchain which is thankfully easy to use and customize. It uses a Ruby script to configure and many custom scripts for various platforms are kept in the `mruby/build_config/ directory. We will make our own custom script to build a Ruby VM that includes our gem.
+
+      Copy the default build script from `mruby/build_config/default.rb` to a different directory outside of the mruby one. Open it up and edit it to include our gem.
+
+      MD
+
+      markdown <<-MD
+
+      To build our project using this custom build script, enter into the mruby directory. From here run the following command: `MRUBY_CONFIG=../default.rb rake`. It will take a while as it build mruby from source including our gem. If you see something like the following that means everything was successful:
+
+      MD
+
+      pre.code do
+        code(class: "line-numbers language-none code") do
+          %{
+================================================
+      Config Name: host/mrbc
+ Output Directory: build/host/mrbc
+         Binaries: mrbc
+    Included Gems:
+             mruby-bin-mrbc - mruby compiler executable
+             mruby-compiler - mruby compiler library
+================================================
+          }
+        end
+      end
+
+
+      markdown <<-MD
+      Your resulting executables will be under `build/host/bin`. To test out our gem execute the executable in `build/host/bin/mirb` and then type in `Example.say_hello` and our program should work!
+      MD
+
+      pre.code do
+        code(class: "line-numbers language-rb code") do
+          %{
+mirb - Embeddable Interactive Ruby Shell
+
+> Example.say_hello
+Hello World => nil
+          }
+        end
+      end
+
+      markdown <<-MD
+
+      ## Arguments and Return Values
+
+      MD
+
+      pre.code do
+        code(class: "line-numbers language-c code") do
+          %{
+
+// defining the function to be later bound to a ruby method
+static mrb_value
+mrb_multi_nums(mrb_stat *mrb, mrb_value self)
+{
+  // we need to store the method arguments we recieve
+  // because of that we initialize them here
+  mrb_int first_input;
+  mrb_int second_input;
+
+  // We need to call a function to recieve the method arguments
+  mrb_get_args(
+    mrb,                        // Ruby VM state
+    "ii",                       // Tell the function we expect 2 integers
+    &first_input, &second_input // Pass addresses of where we want the values to be stored into
+  );
+
+  return mrb_fixnum_value(first_input * second_input);
+}
+
+// gem initializer
+void
+mrb_mruby_example_bindings_gem_init(mrb_state* mrb) {
+	struct RClass *class_binding_example = mrb_define_module(mrb, "Example");
+    
+    // (!) signifies a change from the last example
+    mrb_define_module_function(
+      mrb,                    // Mruby VM state
+      class_binding_example,  // Class we bind method to
+      "multi_nums",           // Name of method
+      mrb_multi_nums,         // Function we are binding as a method
+      MRB_ARGS_REQ(2)         // (!) 2 arguments are required
+    );
+}
+          }
+        end
+      end
+=begin
+      markdown <<-MD
+      MD
+
+      pre.code do
+        code(class: "line-numbers language-rb code") do
+          %{
+def stuff(ok)
+  puts ok
+end
+          }
+        end
+      end
+
+      pre.code do
+        code(class: "line-numbers language-c code") do
+          %{
+void stuff() {
+  printf("ok");
+}
+          }
+        end
+      end
+=end
+    end
+  end
+]
