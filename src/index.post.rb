@@ -1,6 +1,6 @@
 target["index.html"] = Paggio.html do
   head do
-    link rel: "stylesheet", href: "https://unpkg.com/xp.css"
+    #link rel: "stylesheet", href: "https://unpkg.com/xp.css"
     link rel: "stylesheet", href: "style.css"
     link rel: "stylesheet", href: "fonts.css"
     link rel: 'icon', type: 'image/x-icon', href: 'favicon.ico'
@@ -8,6 +8,11 @@ target["index.html"] = Paggio.html do
   body do
     #img.justicar(src: '/justicar.png', alt: 'Justicar', height: '400px')
     #h1 { "Hello world from Justicar" }
+    div.fake_header do
+      h1.title { a.title(href: '/') { "Catgirls Rodeo"} }
+      a.title.header_link(href: 'mailto:contact@tradam.dev') { 'contact@tradam.dev' }
+      a.title.header_link(href: 'https://github.com/realtradam') { 'github' }
+    end
     header do
       h1.title { a.title(href: '/') { "Catgirls Rodeo"} }
       a.title.header_link(href: 'mailto:contact@tradam.dev') { 'contact@tradam.dev' }
@@ -19,8 +24,9 @@ target["index.html"] = Paggio.html do
         Justicar::PreProcessor.articles.keys.sort.reverse_each do |date|
           article = Justicar::PreProcessor.articles[date]
           div.link_background do
-            a.article_link(href: "/articles/#{article[0].tr(' ', '_').downcase}.html", onclick: "Opal.eval(\"open_window(\\\"/articles/raw/#{article[0].tr(' ', '_').downcase}.html\\\", \\\"#{date.to_s}\\\")\");return false;") do
-            #a.article_link(onclick: "Opal.eval(\"open_window(\\\"/articles/raw/#{article[0].tr(' ', '_')}.html\\\")\");return false;") do
+            a.article_link(href: "/articles/#{article[0].tr(' ', '_').downcase}.html") do
+                           #, onclick: "Opal.eval(\"open_window(\\\"/articles/raw/#{article[0].tr(' ', '_').downcase}.html\\\", \\\"#{date.to_s}\\\")\");return false;") do
+              #a.article_link(onclick: "Opal.eval(\"open_window(\\\"/articles/raw/#{article[0].tr(' ', '_')}.html\\\")\");return false;") do
               h2 do
                 article[0]
               end
@@ -29,7 +35,17 @@ target["index.html"] = Paggio.html do
         end
       end
     end
-    img(src: 'rodeo_by_urasato.png').rodeo
+    img(src: 'catgirlsrodeologo.png', style: 'rotate:-10deg').rodeo
+    div.parallax do
+      div.left_background_bar.left_background_bar_shadow
+      div.right_background_bar.right_background_bar_shadow
+      div.parallax_layer.parallax_layer_back do
+        div.left_background_bar
+      end
+      div.parallax_layer.parallax_layer_front do
+        div.right_background_bar
+      end
+    end
     div.window_handler do
       #25.times do
       #  div.guide(style: "flex-basis: #{(220..350).to_a.sample}px") { 'red' }

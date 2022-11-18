@@ -143,6 +143,22 @@ $document.ready do
     end
   end
 
+  # cool background effect
+  $document.on :scroll do |e|
+      $document.css('.left_background_bar').each do |elem|
+        elem.style.apply {
+          #top (500 - ($document.scroll.y * 0.215)).px
+          top (200 * Math.cos($document.scroll.y / 2200) + 300).px
+        }
+      end
+      $document.css('.right_background_bar').each do |elem|
+        elem.style.apply {
+          #height (700 + ($document.scroll.y * 0.15)).px
+          height (100 * Math.sin($document.scroll.y / 4500) + 700 ).px
+        }
+      end
+  end
+
 
   draggable_cached_position = []
 
